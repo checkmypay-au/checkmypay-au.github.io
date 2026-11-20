@@ -1,0 +1,12 @@
+{
+  "id": "liste_a",
+  "description": "Liste des services Humanforce copiée depuis l'écran (mois, jours, une ligne par service). Mise en page uniquement : aucune date, aucun nom. La colonne « Auth'd By » n'est jamais lue ni gardée. Pas d'heure badgée (Actual) dans cette liste.",
+  "mois_annee": "^(?<mois>[A-Z][a-z]+) (?<annee>\\d{4})$",
+  "entete": "^\\s*LocationDepartment",
+  "jour": "^(?<jour>\\d{1,2}) (?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)$",
+  "service": "^(?<debut>\\d{2}:\\d{2}) - (?<fin>\\d{2}:\\d{2}) shift info.*?(?<autorise>Yes|No) \\(\\d{2}/\\d{2}/\\d{4}\\).*?(?<net>\\d+\\.\\d{2})h \\((?<pause>\\d+)m break\\)$",
+  "mois": {
+    "January": 1, "February": 2, "March": 3, "April": 4, "May": 5, "June": 6,
+    "July": 7, "August": 8, "September": 9, "October": 10, "November": 11, "December": 12
+  }
+}

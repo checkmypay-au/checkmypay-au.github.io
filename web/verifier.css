@@ -1,0 +1,435 @@
+/* Page collègues : téléphone d'abord (360–430 px), lisible aussi sur ordinateur. Aucune police extérieure. */
+:root {
+  --fond: #f6f7f9;
+  --carte: #ffffff;
+  --texte: #1b1f24;
+  --discret: #5b6470;
+  --bord: #d5d9df;
+  --accent: #1d5fd1;
+  --accent-texte: #ffffff;
+  --ok: #1d7a3a;
+  --ok-fond: #e6f4ea;
+  --ecart: #a3341b;
+  --ecart-fond: #fdece7;
+  --verif: #8a5a00;
+  --verif-fond: #fff4dc;
+  --mention-fond: #fff4dc;
+  --mention-texte: #5c3d00;
+  --confiance-fond: #e6f4ea;
+  --confiance-texte: #14532d;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fond: #14171b;
+    --carte: #1e2227;
+    --texte: #e8eaed;
+    --discret: #a3abb5;
+    --bord: #3a4048;
+    --accent: #6ea0ff;
+    --accent-texte: #0b1220;
+    --ok: #7ad49a;
+    --ok-fond: #17301f;
+    --ecart: #ff9f86;
+    --ecart-fond: #3a1f18;
+    --verif: #f3c56b;
+    --verif-fond: #352a12;
+    --mention-fond: #352a12;
+    --mention-texte: #f3d9a4;
+    --confiance-fond: #17301f;
+    --confiance-texte: #b9ecc8;
+    color-scheme: dark;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+/* « hidden » l'emporte toujours, même sur un display posé par une classe (.principal, .navigation…). */
+[hidden] { display: none !important; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--fond);
+  color: var(--texte);
+  font: 16px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow-wrap: anywhere;
+}
+
+.bandeau {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid var(--bord);
+}
+.mention, .confiance {
+  margin: 0;
+  padding: 4px 16px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+.mention { background: var(--mention-fond); color: var(--mention-texte); }
+.confiance { background: var(--confiance-fond); color: var(--confiance-texte); font-weight: 600; }
+
+.entete, main, .pied {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.ligne-titre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 12px;
+}
+h1 { font-size: 1.5rem; margin: 0; }
+h2, .h2 { font-size: 1.1rem; margin: 0 0 6px; font-weight: 700; }
+h3 { font-size: 1rem; margin: 16px 0 6px; }
+.discret { color: var(--discret); font-size: 0.9rem; margin: 4px 0 8px; }
+
+button, select, input, textarea { font: inherit; color: inherit; }
+button {
+  min-height: 44px;
+  border-radius: 10px;
+  padding: 8px 14px;
+  cursor: pointer;
+  border: 1px solid var(--bord);
+  background: var(--carte);
+}
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, .depot:focus-within, summary:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.principal {
+  display: block;
+  width: 100%;
+  margin: 16px 0 8px;
+  background: var(--accent);
+  color: var(--accent-texte);
+  border-color: var(--accent);
+  font-weight: 700;
+}
+.secondaire { width: 100%; margin: 8px 0; }
+.bascule { flex: none; }
+
+.etape {
+  background: var(--carte);
+  border: 1px solid var(--bord);
+  border-radius: 12px;
+  padding: 14px;
+  margin: 14px 0;
+}
+summary { cursor: pointer; min-height: 32px; }
+
+.depot {
+  display: block;
+  border: 2px dashed var(--bord);
+  border-radius: 10px;
+  padding: 18px 12px;
+  text-align: center;
+  cursor: pointer;
+}
+.depot.survol { border-color: var(--accent); }
+.depot input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  overflow: hidden;
+}
+.liste-fiches { list-style: none; padding: 0; margin: 8px 0 0; }
+.liste-fiches li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--bord);
+}
+.liste-fiches .erreur { color: var(--ecart); }
+.liste-fiches button { min-height: 36px; padding: 4px 10px; flex: none; }
+
+textarea, input[type="text"], input[type="date"], input[type="time"], input[type="number"], select {
+  width: 100%;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid var(--bord);
+  border-radius: 8px;
+  background: var(--fond);
+}
+::placeholder { color: var(--discret); opacity: 1; }
+textarea { font-family: ui-monospace, Consolas, monospace; font-size: 0.85rem; resize: vertical; }
+
+.champ-banque { margin: 8px 0; }
+.champ-banque label { display: block; font-size: 0.9rem; margin-bottom: 2px; }
+
+.message { color: var(--ecart); background: var(--ecart-fond); padding: 10px 12px; border-radius: 8px; }
+
+.resultat {
+  background: var(--carte);
+  border: 1px solid var(--bord);
+  border-radius: 12px;
+  padding: 14px;
+  margin: 14px 0;
+  scroll-margin-top: 96px; /* le bandeau (Fair Work, confiance) reste visible au-dessus du résultat */
+}
+.semaines { list-style: none; padding: 0; margin: 0; }
+.semaine { border: 1px solid var(--bord); border-radius: 10px; padding: 10px 12px; margin: 10px 0; }
+.semaine .titre { font-weight: 700; }
+.semaine .etat { display: inline-block; margin: 4px 0; padding: 2px 10px; border-radius: 999px; font-weight: 700; }
+.semaine.ok .etat { background: var(--ok-fond); color: var(--ok); }
+.semaine.ecart .etat { background: var(--ecart-fond); color: var(--ecart); }
+.semaine.a_verifier .etat, .semaine.sans_fiche .etat { background: var(--verif-fond); color: var(--verif); }
+.semaine ul { margin: 6px 0 0; padding-left: 18px; }
+.total { list-style: none; padding: 0; margin: 12px 0; font-size: 1.1rem; font-weight: 700; }
+.pied { margin-top: 24px; margin-bottom: 24px; }
+
+@media (min-width: 700px) {
+  .secondaire { width: auto; }
+}
+
+/* ---- Cycle 3b : une étape à la fois, réglages en phrases ---- */
+.progression { margin: 16px 0 6px; font-weight: 700; color: var(--discret); }
+.barre { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.barre span { height: 6px; border-radius: 3px; background: var(--bord); }
+.barre span.fait { background: var(--accent); }
+.etape h2:focus { outline: none; }
+.phrase-reglages, .phrase-champ { line-height: 2.4; margin: 0 0 12px; }
+.menu-phrase, .phrase-champ input {
+  display: inline-block;
+  width: auto;
+  min-height: 40px;
+  padding: 4px 8px;
+  margin: 0 2px;
+  vertical-align: middle;
+  font-weight: 700;
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  background: var(--carte);
+}
+.phrase-champ input[type="text"] { width: 7.5em; }
+.phrase-champ input[type="date"] { width: 10.5em; }
+.phrase-champ input[type="time"] { width: 7em; }
+.phrase-champ input[type="number"] { width: 4.5em; }
+.phrase-champ { display: block; }
+.jour-phrase { padding: 8px 0; border-bottom: 1px solid var(--bord); }
+.jour-phrase .retirer { min-height: 36px; padding: 4px 12px; }
+.navigation { display: flex; gap: 10px; margin: 16px 0 8px; }
+.navigation .principal { flex: 2; width: auto; margin: 0; min-height: 56px; font-size: 1.1rem; }
+.navigation .secondaire { flex: 1; width: auto; margin: 0; min-height: 56px; }
+button:disabled { opacity: 0.6; cursor: default; }
+
+/* ---- Cycle 3c : niveau lu sur la fiche ---- */
+.phrase-reglages p { margin: 0 0 6px; }
+.phrase-reglages { margin-top: 12px; }
+.lien {
+  min-height: 40px;
+  padding: 4px 6px;
+  border: none;
+  background: none;
+  color: var(--accent);
+  text-decoration: underline;
+  font-weight: 700;
+}
+.liste-fiches .avertissement { color: var(--verif); }
+
+/* ---- Cycle 3d : tout ce qui est interactif se voit (clair et sombre) ----
+   Hiérarchie : .principal (Suivant, Vérifier) plein et le plus voyant ; tout autre élément cliquable
+   (boutons secondaires, Retour, modifier, Retirer, langue, exemple, copier) : fond teinté + bordure de couleur
+   (contraste ≥ 3:1 avec ce qui l'entoure) ; champs de saisie : bordure foncée ; cible tactile ≥ 44 px ;
+   appui, survol et focus nettement visibles. */
+:root {
+  --interactif-fond: #e8f0fe;
+  --interactif-survol: #d2e3fc;
+  --interactif-appui: #b9d1f8;
+  --interactif-bord: #1d5fd1;
+  --interactif-texte: #123f8f;
+  --champ-bord: #6b7280;
+  --depot-fond: #eef4ff;
+  --depot-survol-fond: #cfe0fc;
+  --fiche-fond: #f3f7ff;
+  --focus: #1d5fd1;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --interactif-fond: #1c2b45;
+    --interactif-survol: #24395c;
+    --interactif-appui: #2d4672;
+    --interactif-bord: #6ea0ff;
+    --interactif-texte: #d6e4ff;
+    --champ-bord: #8b95a3;
+    --depot-fond: #17233a;
+    --depot-survol-fond: #24395c;
+    --fiche-fond: #1a2433;
+    --focus: #9cc0ff;
+  }
+}
+
+button:not(.principal), .lien {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 8px 14px;
+  border: 2px solid var(--interactif-bord);
+  border-radius: 10px;
+  background: var(--interactif-fond);
+  color: var(--interactif-texte);
+  font-weight: 600;
+  text-decoration: none;
+}
+.lien { padding: 6px 12px; margin-left: 4px; vertical-align: middle; line-height: 1.2; }
+button:not(.principal):hover:not(:disabled) { background: var(--interactif-survol); }
+button:not(.principal):active:not(:disabled) { background: var(--interactif-appui); transform: translateY(1px); }
+.principal:hover:not(:disabled) { filter: brightness(1.08); }
+.principal:active:not(:disabled) { filter: brightness(0.92); transform: translateY(1px); }
+.navigation .principal { min-height: 60px; font-size: 1.15rem; box-shadow: 0 2px 6px rgb(0 0 0 / 25%); }
+
+/* Focus clavier : anneau épais, couleur contrastée, sur tout élément interactif. */
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible, .lien:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+.depot:focus-within { outline: 3px solid var(--focus); outline-offset: 3px; }
+
+/* Champs de saisie et menu : bordure foncée bien visible, fond de la page. */
+textarea, input[type="text"], input[type="date"], input[type="time"], input[type="number"], select {
+  border: 2px solid var(--champ-bord);
+  min-height: 44px;
+}
+.menu-phrase, .phrase-champ input { border: 2px solid var(--interactif-bord); min-height: 44px; }
+textarea:hover, input:hover, select:hover { border-color: var(--interactif-bord); }
+
+/* Zone de dépôt : fond teinté, pointillés de couleur, icône, changement net au survol d'un fichier. */
+.depot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  min-height: 132px;
+  justify-content: center;
+  padding: 18px 12px;
+  border: 3px dashed var(--interactif-bord);
+  border-radius: 14px;
+  background: var(--depot-fond);
+  color: var(--interactif-texte);
+  text-align: center;
+  cursor: pointer;
+}
+.depot:hover { background: var(--interactif-survol); }
+.depot .icone { width: 40px; height: 40px; flex: none; }
+.depot .action { font-size: 1.1rem; font-weight: 700; }
+.depot .aide-depot { font-size: 0.9rem; }
+.depot.survol {
+  border-style: solid;
+  background: var(--depot-survol-fond);
+  box-shadow: 0 0 0 4px var(--interactif-bord) inset;
+}
+
+/* Fiches ajoutées : chacune dans sa propre boîte, avec un bouton Retirer bien visible. */
+.liste-fiches { display: grid; gap: 8px; margin: 12px 0 0; }
+.liste-fiches li {
+  padding: 8px 10px;
+  border: 1px solid var(--champ-bord);
+  border-left: 5px solid var(--interactif-bord);
+  border-bottom-width: 1px;
+  border-radius: 10px;
+  background: var(--fiche-fond);
+}
+.liste-fiches li > span { flex: 1; }
+.liste-fiches button, .jour-phrase .retirer { min-height: 44px; padding: 6px 12px; flex: none; }
+
+/* ---- Cycle 3d, relecture ---- */
+/* Survol et appui nettement visibles : fond plus foncé + bordure épaissie (ombre), appui encore plus foncé. */
+:root { --interactif-survol: #c6dafc; --interactif-appui: #a9c6f7; --depot-survol-fond: #a9c6f7; }
+@media (prefers-color-scheme: dark) {
+  :root { --interactif-survol: #2b4573; --interactif-appui: #36558c; --depot-survol-fond: #2f4d80; }
+}
+button:not(.principal):hover:not(:disabled) { box-shadow: 0 0 0 2px var(--interactif-bord); }
+button:not(.principal):active:not(:disabled) { box-shadow: 0 0 0 3px var(--interactif-bord); }
+/* « modifier » : même style que les autres boutons secondaires (la règle .lien seule perdait en priorité). */
+button.lien { padding: 6px 12px; line-height: 1.2; }
+/* Zone de dépôt pendant un calcul : visiblement inactive. Anneau de focus seulement au clavier. */
+.depot:has(input:disabled) { opacity: 0.6; cursor: default; }
+.depot:has(input:disabled):hover { background: var(--depot-fond); }
+.depot:focus-within { outline: none; }
+.depot:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
+/* Champs dans les phrases : un peu d'air entre deux lignes de champs. */
+.phrase-champ input { margin-block: 4px; }
+/* Ce qui n'est pas cliquable ne prend pas la couleur du cliquable. */
+.liste-fiches li { border-left-color: var(--discret); }
+.semaine .etat { border-radius: 6px; }
+/* Résumé en lecture seule : bordure discrète, pas de poignée (ce n'est pas un champ à remplir). */
+textarea[readonly] { resize: none; border: 1px solid var(--discret); background: var(--carte); }
+
+/* ---- Cycle 3e : heure de la pause ---- */
+.pause-phrase { padding: 6px 0; border-bottom: 1px solid var(--bord); }
+.notes-pause { margin: 6px 0 12px; padding-left: 18px; }
+.notes-pause li { margin: 4px 0; }
+
+/* ---- Cycle 3f : une seule liste de services ---- */
+.liste-services, .groupe-services { list-style: none; margin: 0; padding: 0; }
+.ligne-service { padding: 8px 0; border-bottom: 1px solid var(--bord); }
+.ligne-service .phrase-champ { margin: 0; }
+.ligne-service .actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+.ligne-service.remplacee { color: var(--discret); }
+.ligne-service .note-ligne { display: block; color: var(--discret); font-size: 0.9rem; }
+.duree-pause { font-weight: 700; }
+/* Heures : assez larges pour l'affichage 12 h « 08:00 PM » (téléphones réglés en anglais d'Australie). */
+.phrase-champ input[type="time"] { width: 9em; }
+/* Durée de pause en minutes : deux ou trois chiffres. */
+.phrase-champ input[data-champ="pause_min"], .phrase-champ input[data-champ-ligne="pause_min"] { width: 4.5em; }
+
+/* ---- Cycle 3g : saisie fiable, verdict, garder sur ce téléphone, envoyer, avis ---- */
+.consigne { margin: 8px 0; padding: 8px 10px; border-left: 4px solid var(--verif); background: var(--verif-fond); border-radius: 6px; font-weight: 600; }
+.verdict { margin: 6px 0 12px; padding: 12px 14px; border-radius: 10px; font-size: 1.25rem; font-weight: 800; line-height: 1.3; }
+.verdict[data-etat="manque"], .verdict[data-etat="trop"] { background: var(--ecart-fond); color: var(--ecart); }
+.verdict[data-etat="ok"] { background: var(--ok-fond); color: var(--ok); }
+.verdict[data-etat="a_verifier"], .verdict[data-etat="non_verifie"] { background: var(--verif-fond); color: var(--verif); }
+.garde, .avis { background: var(--carte); border: 1px solid var(--bord); border-radius: 12px; padding: 12px 14px; margin: 14px 0; }
+.case { display: flex; align-items: center; gap: 10px; font-weight: 700; cursor: pointer; min-height: 44px; }
+.case input {
+  appearance: none;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  border: 2px solid var(--interactif-bord);
+  border-radius: 8px;
+  background: var(--interactif-fond);
+  cursor: pointer;
+}
+/* Cochée : carré plein au centre, bien visible en clair et en sombre. */
+.case input:checked { background: var(--interactif-bord); box-shadow: inset 0 0 0 9px var(--interactif-fond); }
+.case input:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.case input:disabled { opacity: 0.6; cursor: default; }
+.avis-zone { margin: 14px 0; }
+.question { display: block; font-weight: 700; margin: 12px 0 4px; }
+.choix { display: flex; gap: 10px; }
+.choix button { flex: 1; }
+.choix button[aria-pressed="true"] { background: var(--interactif-bord); color: var(--carte); }
+textarea.saisie { font-family: inherit; font-size: 1rem; }
+
+/* Minutes de pause calculées (début et fin tapés) : pas modifiables à la main, et ça se voit. */
+.phrase-champ input[readonly], .phrase-champ input[readonly]:hover {
+  border-style: dashed;
+  border-color: var(--discret);
+  background: var(--carte);
+  cursor: default;
+}
+
+/* Nouvelle version prête : bien visible, en haut, avec son bouton. */
+.maj {
+  background: var(--verif-fond);
+  color: var(--texte);
+  border: 2px solid var(--verif);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin: 12px 0;
+}
+.maj p { margin: 4px 0; }
+.maj .discret { color: var(--texte); }
+
+/* Qui je suis (v0.26, démo) : carte encadrée en haut de l'étape 1 et rappel en haut du résultat. */
+.qui-carte { border: 2px solid var(--accent); border-radius: 12px; padding: 10px 14px; margin: 8px 0 14px; background: var(--carte); }
+.qui-carte h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.qui-carte p { margin: 0 0 6px; }
+#qui-resume-texte { font-weight: 700; }

@@ -1,0 +1,39 @@
+{
+  "id": "format_a",
+  "description": "Fiche de paie hebdomadaire, mise en page « Payments and Allowances / Deductions and Tax » (employeur actuel, cycle 2). Mise en page uniquement : aucun montant, aucune date.",
+  "signature": ["PAYSLIP", "Payments and Allowances", "Deductions and Tax", "Net Pay Disbursement"],
+  "tolerance_ordonnee": 1.0,
+  "separateur_colonnes": "|",
+  "entete": {
+    "periode": "Pay Period:\\s*(?<du>\\d{2}[A-Za-z]{3}\\d{2})\\s+to\\s+(?<au>\\d{2}[A-Za-z]{3}\\d{2})",
+    "numero": "\\bPeriod:\\s*(?<numero>\\d+)(?![\\dA-Za-z])",
+    "date_paiement": "Pay Date:\\s*(?<date>\\d{2}[A-Za-z]{3}\\d{2})",
+    "taux_base": "Rate:\\s*(?<taux>\\d+(?:\\.\\d+)?)",
+    "classification": "Classification:\\s*(?<classification>.+?)\\s*$"
+  },
+  "format_date": {
+    "motif": "^(?<j>\\d{2})(?<m>[A-Za-z]{3})(?<a>\\d{2})$",
+    "siecle": 2000,
+    "mois": { "Jan": 1, "Feb": 2, "Mar": 3, "Apr": 4, "May": 5, "Jun": 6, "Jul": 7, "Aug": 8, "Sep": 9, "Oct": 10, "Nov": 11, "Dec": 12 }
+  },
+  "resume": {
+    "libelle_ligne": "This Pay",
+    "colonnes": ["brut", "retenues_avant_impot", "brut_imposable", "retenues_apres_impot", "impot", "net"]
+  },
+  "tableau": {
+    "titre": "Payments and Allowances",
+    "fin": "Net Pay Disbursement",
+    "champs_paiement": ["heures", "taux", "montant"],
+    "sous_section_avant_impot": "Pre-Tax deductions"
+  },
+  "retenues": {
+    "libelles_fiscaux": ["Tax"],
+    "type_fiscal": "impot",
+    "type_autre": "apres_impot"
+  },
+  "avantages": {
+    "titre": "Benefits",
+    "fin": "Super Fund",
+    "libelles_super": ["SG Cont"]
+  }
+}

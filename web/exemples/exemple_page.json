@@ -1,0 +1,5 @@
+{
+  "description": "Exemple FICTIF pour le bouton « essayer » de la page : montant reçu en banque (égal au net de la fiche fictive) et niveau. Valeurs inventées.",
+  "banque": "693.05",
+  "niveau": "Level 2"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "Check my pay · Vérifier ma paie",
+  "short_name": "My pay · Ma paie",
+  "description": "Checks your pay slips against your hours. Nothing leaves your phone. · Vérifie tes fiches de paie avec tes heures. Rien ne quitte ton téléphone.",
+  "lang": "en",
+  "start_url": "verifier.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f7f9",
+  "theme_color": "#1d5fd1",
+  "icons": [
+    { "src": "icone.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

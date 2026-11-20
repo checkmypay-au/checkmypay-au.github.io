@@ -1,0 +1,21 @@
+{
+  "description": "Réglages de la page collègues : jeu de règles, cas que l'outil sait vérifier (contrat, convention, État : un jeu de règles officiel et ses jours fériés chacun) et libellés de la fiche de paie (format_a) → catégories du moteur. Rien n'est pré-choisi : l'État et la convention sont demandés ; le niveau est lu sur la fiche, sinon demandé. Aucune donnée personnelle.",
+  "regles": "au/ma000009",
+  "cas_couverts": [
+    {
+      "contrat": "casual",
+      "convention": "hospitality",
+      "etat": "QLD"
+    }
+  ],
+  "correspondance": {
+    "Casual Pay M-F": "ordinaire_semaine",
+    "No Break Allowance": "pause_manquee",
+    "O/T Midn Fri-Sun200%": "heures_sup_200",
+    "Ord Casual": "ordinaire_semaine",
+    "Penalty 7pm to Midni": "soiree",
+    "Saturday Casual": "samedi",
+    "Sunday Casual": "dimanche",
+    "Tax": "impot"
+  }
+}

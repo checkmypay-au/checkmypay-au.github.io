@@ -1,0 +1,91 @@
+{
+  "pays": "AU",
+  "instrument": "MA000009",
+  "intitule": "Hospitality Industry (General) Award 2020",
+  "classification": "Level 2, casual",
+  "date_effet": "2026-07-01",
+  "sources": [
+    "Fiche « Contrôle de paie et d'heures – récapitulatif et spécification d'application », §3 (16 nov. 2026)",
+    "Fair Work Ombudsman, pay guides MA000009 ; Fair Work Act 2009 s 324 (retenues)",
+    "Fair Work, « Evening & night work in the Hospitality Award » (K600027) : majoration payée pour chaque heure ou partie d'heure, par service — https://fairwork.gov.au/tools-and-resources/library/K600027_Evening-night-work-in-the-Hospitality-Award"
+  ],
+  "taux_base_cents": 2708,
+  "categories_jour": {
+    "ordinaire_semaine": { "pct": 125, "jours_semaine": [1, 2, 3, 4, 5] },
+    "samedi": { "pct": 150, "jours_semaine": [6] },
+    "dimanche": { "pct": 175, "jours_semaine": [7] },
+    "jour_ferie": { "pct": 250, "ferie": true }
+  },
+  "heures_sup": {
+    "seuil_semaine_min": 2280,
+    "seuil_jour_min": 720,
+    "affectation": "dernieres_minutes_chronologiques",
+    "taux_par_categorie_jour": {
+      "ordinaire_semaine": {
+        "paliers": [
+          { "categorie": "heures_sup_150", "pct": 150, "minutes_par_jour": 120 },
+          { "categorie": "heures_sup_200", "pct": 200 }
+        ]
+      },
+      "samedi": { "categorie": "heures_sup_200", "pct": 200 },
+      "dimanche": { "categorie": "heures_sup_200", "pct": 200 }
+    },
+    "source": "https://awards.fairwork.gov.au/MA000009.html clauses 11.2, 11.4, 28.3, 28.4 (tableau 13)",
+    "note": "Casual : heures sup. au-delà de 12 h par jour ou par service, ou de 38 h par semaine (11.2, 11.4). Lundi–vendredi : 2 premières heures 150 %, ensuite 200 % ; vendredi minuit à dimanche minuit : 200 % (28.4). Le palier de 2 h se compte par jour (28.3). Jour férié (29.1) non traité : lève « règle manquante ». Une minute payée en heures sup. ne reçoit aucune majoration horaire (soirée, nuit) : clause 29.1, la majoration ne se compte que sur les minutes de la plage qui ne sont pas des heures sup."
+  },
+  "minimum_engagement": {
+    "minutes": 120,
+    "par": "service",
+    "source": "https://awards.fairwork.gov.au/MA000009.html clauses 11.3 et 29.4(b)",
+    "note": "Interprétation par service : non confirmée par Fair Work. Complément payé mais non travaillé : au taux de la catégorie de jour du service, sans majoration, jamais en heures sup., hors seuils de 12 h et de 38 h."
+  },
+  "majorations": [
+    {
+      "categorie": "soiree",
+      "cents_par_heure": 295,
+      "decompte": "heure_entamee",
+      "jours_semaine": [1, 2, 3, 4, 5],
+      "debut": "19:00",
+      "fin": "24:00",
+      "exclut_feries": true
+    },
+    {
+      "categorie": "nuit",
+      "cents_par_heure": 442,
+      "decompte": "heure_entamee",
+      "jours_semaine": [1, 2, 3, 4, 5],
+      "debut": "00:00",
+      "fin": "07:00",
+      "exclut_feries": true,
+      "source": "https://awards.fairwork.gov.au/MA000009.html clause 29.2 (tableau 14, colonne casual : 125 % plus 4,42 $ par heure ou partie d'heure, lundi–vendredi minuit à 7 h) et annexe C.3"
+    }
+  ],
+  "pause_manquee": {
+    "categorie": "pause_manquee",
+    "seuil_min": 360,
+    "pct_base": 50,
+    "jusqu_a": "fin_du_service"
+  },
+  "super": {
+    "pct": 12,
+    "assiette_exclut": ["heures_sup_150", "heures_sup_200"]
+  },
+  "service_apres_minuit": "jour_de_debut",
+  "retenues": {
+    "accord_ecrit_requis": true,
+    "reference": "Fair Work Act 2009 s 324",
+    "categories_fiscales": ["impot"]
+  },
+  "requalification": {
+    "jour_ferie": "categorie_du_jour_hors_ferie"
+  },
+  "jours_feries": {
+    "QLD": [
+      { "date": "2026-10-05", "nom": "King's Birthday", "source": "fiche de règles (1er lundi d'octobre)" },
+      { "date": "2026-12-24", "debut": "18:00", "nom": "Christmas Eve (partie)", "source": "à confirmer" },
+      { "date": "2026-12-25", "nom": "Christmas Day", "source": "à confirmer" },
+      { "date": "2026-12-26", "nom": "Boxing Day", "source": "à confirmer" },
+      { "date": "2026-12-28", "nom": "Boxing Day (jour supplémentaire)", "source": "à confirmer" }
+    ]
+  }
+}

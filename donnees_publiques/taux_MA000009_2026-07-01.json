@@ -1,0 +1,333 @@
+{
+  "instrument": "MA000009",
+  "intitule": "Hospitality Industry (General) Award 2020",
+  "date_effet": "2026-07-01",
+  "groupe": "Hospitality Employees (hors casino), adulte",
+  "source": {
+    "api": "Fair Work Commission — Modern Awards Pay Database API v1 (https://api.fwc.gov.au)",
+    "endpoints": [
+      "/api/v1/awards/MA000009/classifications",
+      "/api/v1/awards/MA000009/penalties?classification_level=1..6&employee_rate_type_code=AD",
+      "/api/v1/awards/MA000009/wage-allowances"
+    ],
+    "date_appel": "2026-11-19",
+    "fichiers_bruts": [
+      "fwc_MA000009_classifications_20261119-221646_p1.json",
+      "fwc_MA000009_classifications_20261119-221646_p10.json",
+      "fwc_MA000009_classifications_20261119-221646_p2.json",
+      "fwc_MA000009_classifications_20261119-221646_p3.json",
+      "fwc_MA000009_classifications_20261119-221646_p4.json",
+      "fwc_MA000009_classifications_20261119-221646_p5.json",
+      "fwc_MA000009_classifications_20261119-221646_p6.json",
+      "fwc_MA000009_classifications_20261119-221646_p7.json",
+      "fwc_MA000009_classifications_20261119-221646_p8.json",
+      "fwc_MA000009_classifications_20261119-221646_p9.json",
+      "fwc_MA000009_penalties_niv1_20261119-221704_p1.json",
+      "fwc_MA000009_penalties_niv1_20261119-221704_p2.json",
+      "fwc_MA000009_penalties_niv1_20261119-221704_p3.json",
+      "fwc_MA000009_penalties_niv1_20261119-221704_p4.json",
+      "fwc_MA000009_penalties_niv1_20261119-221704_p5.json",
+      "fwc_MA000009_penalties_niv2_20261119-221706_p1.json",
+      "fwc_MA000009_penalties_niv2_20261119-221706_p2.json",
+      "fwc_MA000009_penalties_niv2_20261119-221706_p3.json",
+      "fwc_MA000009_penalties_niv3_20261119-221708_p1.json",
+      "fwc_MA000009_penalties_niv3_20261119-221708_p2.json",
+      "fwc_MA000009_penalties_niv3_20261119-221708_p3.json",
+      "fwc_MA000009_penalties_niv4_20261119-221709_p1.json",
+      "fwc_MA000009_penalties_niv4_20261119-221709_p2.json",
+      "fwc_MA000009_penalties_niv4_20261119-221709_p3.json",
+      "fwc_MA000009_penalties_niv4_20261119-221709_p4.json",
+      "fwc_MA000009_penalties_niv5_20261119-221711_p1.json",
+      "fwc_MA000009_penalties_niv6_20261119-221712_p1.json",
+      "fwc_MA000009_penalties_niv6_20261119-221712_p2.json",
+      "fwc_MA000009_wage-allowances_20261119-221732_p1.json",
+      "fwc_MA000009_wage-allowances_20261119-221732_p2.json",
+      "fwc_MA000009_wage-allowances_20261119-221732_p3.json",
+      "fwc_MA000009_wage-allowances_20261119-221732_p4.json",
+      "fwc_MA000009_wage-allowances_20261119-221732_p5.json"
+    ],
+    "note": "Le niveau API (classification_level) est décalé de 1 : niveau API 1 = Introductory level, niveau API 3 = Level 2. Taux en cents, valeurs « penalty_calculated_value » et « allowance_amount » de l'API ×100."
+  },
+  "niveaux": [
+    {
+      "classification": "Introductory level",
+      "classification_fixed_id": 242,
+      "niveau_api": 1,
+      "exemples": null,
+      "base_pay_rate_id": "BR89890",
+      "taux_base_cents": 2574,
+      "casual": {
+        "semaine": {
+          "pct": 125,
+          "cents_par_heure": 3218
+        },
+        "jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 6435
+        },
+        "samedi": {
+          "pct": 150,
+          "cents_par_heure": 3861
+        },
+        "dimanche": {
+          "pct": 175,
+          "cents_par_heure": 4505
+        }
+      },
+      "casual_heures_sup": {
+        "heures_sup_200": {
+          "pct": 200,
+          "cents_par_heure": 5148
+        },
+        "heures_sup_150": {
+          "pct": 150,
+          "cents_par_heure": 3861
+        },
+        "heures_sup_jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 6435
+        },
+        "heures_sup_weekend": {
+          "pct": 200,
+          "cents_par_heure": 5148
+        }
+      }
+    },
+    {
+      "classification": "Level 1",
+      "classification_fixed_id": 243,
+      "niveau_api": 2,
+      "exemples": "Food and beverage attendant grade 1; Guest service grade 1; Kitchen attendant grade 1",
+      "base_pay_rate_id": "BR89891",
+      "taux_base_cents": 2644,
+      "casual": {
+        "semaine": {
+          "pct": 125,
+          "cents_par_heure": 3305
+        },
+        "jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 6610
+        },
+        "samedi": {
+          "pct": 150,
+          "cents_par_heure": 3966
+        },
+        "dimanche": {
+          "pct": 175,
+          "cents_par_heure": 4627
+        }
+      },
+      "casual_heures_sup": {
+        "heures_sup_200": {
+          "pct": 200,
+          "cents_par_heure": 5288
+        },
+        "heures_sup_150": {
+          "pct": 150,
+          "cents_par_heure": 3966
+        },
+        "heures_sup_jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 6610
+        },
+        "heures_sup_weekend": {
+          "pct": 200,
+          "cents_par_heure": 5288
+        }
+      }
+    },
+    {
+      "classification": "Level 2",
+      "classification_fixed_id": 246,
+      "niveau_api": 3,
+      "exemples": "Clerical grade 1; Cook grade 1; Door person/security officer grade 1; Food and beverage attendant grade 2; Front office grade 1; Gardener grade 1; Guest service grade 2; Kitchen attendant grade 2; Leisure attendant grade 1; Storeperson grade 1",
+      "base_pay_rate_id": "BR89892",
+      "taux_base_cents": 2708,
+      "casual": {
+        "semaine": {
+          "pct": 125,
+          "cents_par_heure": 3385
+        },
+        "jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 6770
+        },
+        "samedi": {
+          "pct": 150,
+          "cents_par_heure": 4062
+        },
+        "dimanche": {
+          "pct": 175,
+          "cents_par_heure": 4739
+        }
+      },
+      "casual_heures_sup": {
+        "heures_sup_200": {
+          "pct": 200,
+          "cents_par_heure": 5416
+        },
+        "heures_sup_150": {
+          "pct": 150,
+          "cents_par_heure": 4062
+        },
+        "heures_sup_jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 6770
+        },
+        "heures_sup_weekend": {
+          "pct": 200,
+          "cents_par_heure": 5416
+        }
+      }
+    },
+    {
+      "classification": "Level 3",
+      "classification_fixed_id": 257,
+      "niveau_api": 4,
+      "exemples": "Clerical grade 2; Cook grade 2; Food and beverage attendant grade 3; Fork-lift driver; Front office grade 2; Gardener grade 2; Guest service grade 3; Handyperson; Kitchen attendant grade 3; Leisure attendant grade 2; Storeperson grade 2; Timekeeper/security officer grade 2",
+      "base_pay_rate_id": "BR89894",
+      "taux_base_cents": 2797,
+      "casual": {
+        "semaine": {
+          "pct": 125,
+          "cents_par_heure": 3496
+        },
+        "jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 6993
+        },
+        "samedi": {
+          "pct": 150,
+          "cents_par_heure": 4196
+        },
+        "dimanche": {
+          "pct": 175,
+          "cents_par_heure": 4895
+        }
+      },
+      "casual_heures_sup": {
+        "heures_sup_200": {
+          "pct": 200,
+          "cents_par_heure": 5594
+        },
+        "heures_sup_150": {
+          "pct": 150,
+          "cents_par_heure": 4196
+        },
+        "heures_sup_jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 6993
+        },
+        "heures_sup_weekend": {
+          "pct": 200,
+          "cents_par_heure": 5594
+        }
+      }
+    },
+    {
+      "classification": "Level 4",
+      "classification_fixed_id": 268,
+      "niveau_api": 5,
+      "exemples": "Clerical grade 3; Cook (tradesperson) grade 3; Food and beverage attendant (tradesperson) grade 4; Front office grade 3; Gardener grade 3 (tradesperson); Guest service grade 4; Leisure attendant grade 3; Storeperson grade 3",
+      "base_pay_rate_id": "BR89895",
+      "taux_base_cents": 2945,
+      "casual": {
+        "semaine": {
+          "pct": 125,
+          "cents_par_heure": 3681
+        },
+        "jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 7363
+        },
+        "samedi": {
+          "pct": 150,
+          "cents_par_heure": 4418
+        },
+        "dimanche": {
+          "pct": 175,
+          "cents_par_heure": 5154
+        }
+      },
+      "casual_heures_sup": {
+        "heures_sup_200": {
+          "pct": 200,
+          "cents_par_heure": 5890
+        },
+        "heures_sup_150": {
+          "pct": 150,
+          "cents_par_heure": 4418
+        },
+        "heures_sup_jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 7363
+        },
+        "heures_sup_weekend": {
+          "pct": 200,
+          "cents_par_heure": 5890
+        }
+      }
+    },
+    {
+      "classification": "Level 5",
+      "classification_fixed_id": 276,
+      "niveau_api": 6,
+      "exemples": "Clerical supervisor; Cook (tradesperson) grade 4; Food and beverage supervisor; Front office supervisor; Gardener grade 4 (tradesperson); Guest service supervisor",
+      "base_pay_rate_id": "BR89896",
+      "taux_base_cents": 3130,
+      "casual": {
+        "semaine": {
+          "pct": 125,
+          "cents_par_heure": 3913
+        },
+        "jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 7825
+        },
+        "samedi": {
+          "pct": 150,
+          "cents_par_heure": 4695
+        },
+        "dimanche": {
+          "pct": 175,
+          "cents_par_heure": 5478
+        }
+      },
+      "casual_heures_sup": {
+        "heures_sup_200": {
+          "pct": 200,
+          "cents_par_heure": 6260
+        },
+        "heures_sup_150": {
+          "pct": 150,
+          "cents_par_heure": 4695
+        },
+        "heures_sup_jour_ferie": {
+          "pct": 250,
+          "cents_par_heure": 7825
+        },
+        "heures_sup_weekend": {
+          "pct": 200,
+          "cents_par_heure": 6260
+        }
+      }
+    }
+  ],
+  "primes_horaires": {
+    "soiree": {
+      "wage_allowance_fixed_id": 87,
+      "libelle_api": "Penalty—Monday to Friday—7.00 pm to midnight",
+      "clause": "29.2",
+      "cents_par_heure": 295,
+      "unite": "per hour or part thereof"
+    },
+    "nuit": {
+      "wage_allowance_fixed_id": 11954,
+      "libelle_api": "Penalty—Monday to Friday—midnight to 7.00 am",
+      "clause": "29.2",
+      "cents_par_heure": 442,
+      "unite": "per hour or part thereof"
+    }
+  }
+}

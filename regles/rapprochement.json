@@ -1,0 +1,9 @@
+{
+  "description": "Paramètres de rapprochement, indépendants de tout pays.",
+  "fusion_paiement_decale": {
+    "part_payee_max_pct": 50,
+    "tolerance_excedent_pct": 25
+  },
+  "tolerance_super_cents": 1,
+  "tolerance_brut_cents": 0
+}

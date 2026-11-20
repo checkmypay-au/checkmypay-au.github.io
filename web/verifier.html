@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<!-- Aucune ressource extérieure : tout vient de la même origine (fichiers locaux). -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Check my pay</title>
+<link rel="stylesheet" href="verifier.css">
+<!-- Installable et utilisable hors ligne (cycle 4) : manifeste, icône, couleurs ; fichiers mis en cache par sw.js. -->
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icone.svg" type="image/svg+xml">
+<meta name="theme-color" content="#1d5fd1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14171b" media="(prefers-color-scheme: dark)">
+</head>
+<body>
+<div id="bandeau" class="bandeau">
+  <p id="mention" class="mention" role="note"><span lang="en" id="mention-en"></span> · <span lang="fr" id="mention-fr"></span></p>
+  <p id="confiance" class="confiance" data-t="confiance"></p>
+</div>
+
+<header class="entete">
+  <div class="ligne-titre">
+    <h1 data-t="titre">Check my pay</h1>
+    <button type="button" id="bascule" class="bascule" data-t="bascule">Français</button>
+  </div>
+  <button type="button" id="essayer" class="secondaire" data-t="essayer"></button>
+  <button type="button" id="quitter-exemple" class="secondaire" data-t="quitter_exemple" hidden></button>
+</header>
+
+<main>
+  <!-- Nouvelle version prête (hors ligne, cycle 4) : rien ne change sans ce geste. -->
+  <section id="maj" class="maj" role="status" hidden>
+    <p data-t="maj_prete"></p>
+    <p class="discret" data-t="maj_aide"></p>
+    <button type="button" id="maj-bouton" class="secondaire" data-t="maj_bouton"></button>
+  </section>
+  <div id="assistant">
+    <p id="progression" class="progression" aria-live="polite"></p>
+    <div class="barre" aria-hidden="true"><span id="barre-1"></span><span id="barre-2"></span><span id="barre-3"></span></div>
+
+    <section class="etape" id="etape-1" data-pas="1">
+      <h2 tabindex="-1" data-t="etape1"></h2>
+      <!-- Qui je suis : en haut de l'étape 1, bien visible (démo v0.26 : la personne ne l'avait pas trouvé). -->
+      <div class="phrase-reglages qui-carte" id="qui">
+        <h3 data-t="qui_titre"></h3>
+        <!-- Qui je suis (cycle Q4+Q5) : rien de pré-choisi, sauf « casual » quand toutes les fiches le montrent. -->
+        <p><label for="qui-contrat" data-t="qui_contrat"></label> <select id="qui-contrat" class="menu-phrase"></select></p>
+        <p id="qui-lu" class="discret" data-t="qui_lu_fiche" hidden></p>
+        <p><label for="qui-convention" data-t="qui_convention"></label> <select id="qui-convention" class="menu-phrase"></select></p>
+        <p><label for="qui-etat" data-t="qui_etat"></label> <select id="qui-etat" class="menu-phrase"></select></p>
+        <p id="niveau-ligne"><span id="niveau-texte"></span> <select id="niveau" class="menu-phrase"></select>
+          <button type="button" id="niveau-modifier" class="lien" data-t="niveau_modifier"></button></p>
+        <p id="niveau-note" class="discret"></p>
+      </div>
+      <label id="depot" class="depot" for="fichiers">
+        <svg class="icone" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 11v6M9 14h6"/></svg>
+        <span class="action" data-t="depot_action"></span>
+        <span class="aide-depot" data-t="depot_aide"></span>
+        <input type="file" id="fichiers" accept="application/pdf,.pdf" multiple>
+      </label>
+      <ul id="liste-fiches" class="liste-fiches"></ul>
+      <p id="aucune-fiche" class="discret" data-t="etape1_aucune"></p>
+
+    </section>
+
+    <section class="etape" id="etape-2" data-pas="2" hidden>
+      <h2 tabindex="-1"><label for="humanforce" data-t="etape2"></label></h2>
+      <p class="discret" data-t="etape2_aide"></p>
+      <p class="consigne" data-t="hf_peut_oublier"></p>
+      <textarea id="humanforce" rows="8" spellcheck="false" autocomplete="off"></textarea>
+      <button type="button" id="sans-humanforce" class="secondaire" data-t="sans_humanforce"></button>
+    </section>
+
+    <section class="etape" id="options" data-pas="3" hidden>
+      <h2 tabindex="-1" data-t="etape3"></h2>
+      <p id="etape3-aide" class="discret" data-t="etape3_aide"></p>
+
+      <h3 data-t="banque"></h3>
+      <div id="banque"></div>
+      <p id="banque-vide" class="discret" data-t="banque_aucune"></p>
+
+      <h3 data-t="services_titre"></h3>
+      <p id="services-aide" class="discret" data-t="services_aide"></p>
+      <!-- Une seule liste : les services repris de Humanforce (#pauses), puis les services ajoutés (#vraies). -->
+      <ul class="liste-services">
+        <li class="groupe-services"><div id="pauses"></div></li>
+        <li class="groupe-services"><div id="vraies"></div></li>
+      </ul>
+      <p id="pauses-vide" class="discret" data-t="services_aucun"></p>
+      <button type="button" id="ajouter-jour" class="secondaire" data-t="ajouter_jour"></button>
+    </section>
+  </div>
+
+  <p id="statut" class="discret" role="status"></p>
+  <p id="message" class="message" role="alert" hidden></p>
+
+  <div id="navigation" class="navigation">
+    <button type="button" id="retour" class="secondaire" data-t="retour"></button>
+    <button type="button" id="suivant" class="principal" data-t="suivant"></button>
+    <button type="button" id="verifier" class="principal" data-t="verifier" hidden></button>
+  </div>
+
+  <section id="resultat" class="resultat" data-etat="vide" hidden>
+    <h2 tabindex="-1" data-t="resultat"></h2>
+    <!-- Verdict en une phrase, tout en haut ; le détail suit. -->
+    <p id="verdict" class="verdict"></p>
+    <!-- Rappel « qui je suis » en haut du résultat (l'exemple fictif va droit ici) ; « Corriger » ramène à l'étape 1. -->
+    <div id="qui-resume" class="qui-carte">
+      <p id="qui-resume-texte"></p>
+      <button type="button" id="qui-resume-modifier" class="secondaire" data-t="qui_corriger"></button>
+    </div>
+    <p id="note-exemple" class="discret" data-t="exemple_note" hidden></p>
+    <ol id="semaines" class="semaines"></ol>
+    <h3 id="titre-pauses" data-t="pauses_resultat" hidden></h3>
+    <ul id="notes-pause" class="notes-pause" hidden></ul>
+    <h3 id="titre-minuit" data-t="minuit_titre" hidden></h3>
+    <ul id="notes-minuit" class="notes-pause" hidden></ul>
+    <h3 id="titre-main" data-t="main_titre" hidden></h3>
+    <ul id="notes-main" class="notes-pause" hidden></ul>
+    <ul id="total" class="total"></ul>
+    <h3><label for="resume" data-t="resume"></label></h3>
+    <textarea id="resume" rows="12" readonly></textarea>
+    <!-- Envoyer : feuille de partage du téléphone (la personne choisit à qui) ; absente → Copier seulement. -->
+    <button type="button" id="envoyer" class="secondaire" data-t="envoyer" hidden></button>
+    <button type="button" id="copier" class="secondaire" data-t="copier"></button>
+    <p id="copie-etat" class="discret" role="status"></p>
+    <button type="button" id="modifier" class="secondaire" data-t="modifier"></button>
+  </section>
+
+  <!-- Garder sur ce téléphone : décoché par défaut ; stockage de l'appareil seulement, jamais envoyé. -->
+  <section id="garde" class="garde">
+    <label class="case"><input type="checkbox" id="garder" autocomplete="off"> <span data-t="garder"></span></label>
+    <p class="discret" data-t="garder_aide"></p>
+    <button type="button" id="effacer-tout" class="secondaire" data-t="effacer_tout" hidden></button>
+    <p id="garde-etat" class="discret" role="status"></p>
+  </section>
+
+  <!-- Avis : trois questions, rien n'est envoyé sans le geste de la personne ; aucun contact écrit ici. -->
+  <div class="avis-zone">
+    <button type="button" id="avis-ouvrir" class="secondaire" data-t="avis_ouvrir" aria-expanded="false" aria-controls="avis"></button>
+    <section id="avis" class="avis" hidden>
+      <h2 tabindex="-1" data-t="avis_titre"></h2>
+      <p class="discret" data-t="avis_note"></p>
+      <p id="avis-q1" class="question" data-t="avis_q1"></p>
+      <div class="choix" role="group" aria-labelledby="avis-q1">
+        <button type="button" id="avis-oui" data-t="avis_oui" aria-pressed="false"></button>
+        <button type="button" id="avis-non" data-t="avis_non" aria-pressed="false"></button>
+      </div>
+      <label class="question" for="avis-gene" data-t="avis_q2"></label>
+      <textarea id="avis-gene" class="saisie" rows="3" autocomplete="off"></textarea>
+      <label class="question" for="avis-idee" data-t="avis_q3"></label>
+      <textarea id="avis-idee" class="saisie" rows="3" autocomplete="off"></textarea>
+      <label class="question" for="avis-apercu" data-t="avis_apercu"></label>
+      <textarea id="avis-apercu" rows="5" readonly></textarea>
+      <button type="button" id="avis-envoyer" class="secondaire" data-t="avis_envoyer" hidden></button>
+      <button type="button" id="avis-copier" class="secondaire" data-t="avis_copier"></button>
+      <p id="avis-etat" class="discret" role="status"></p>
+      <button type="button" id="avis-fermer" class="secondaire" data-t="avis_fermer"></button>
+    </section>
+  </div>
+</main>
+
+<p class="discret pied">Fair Work Ombudsman · fairwork.gov.au · 13 13 94</p>
+<code id="violations" hidden>[]</code>
+<script type="module" src="verifier.js"></script>
+</body>
+</html>
