@@ -433,3 +433,6 @@ textarea.saisie { font-family: inherit; font-size: 1rem; }
 .qui-carte h3 { margin: 0 0 4px; font-size: 1.05rem; }
 .qui-carte p { margin: 0 0 6px; }
 #qui-resume-texte { font-weight: 700; }
+
+/* ---- Cycle 6b : champ piège anti-robots de l'avis (jamais vu ni atteint par une personne) ---- */
+.piege { position: absolute; left: -10000px; width: 1px; height: 1px; opacity: 0; pointer-events: none; }

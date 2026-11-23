@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
 <!-- Aucune ressource extérieure : tout vient de la même origine (fichiers locaux). -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; connect-src 'self'; img-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; connect-src 'self' https://api.web3forms.com; img-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Check my pay</title>
 <link rel="stylesheet" href="verifier.css">
 <!-- Installable et utilisable hors ligne (cycle 4) : manifeste, icône, couleurs ; fichiers mis en cache par sw.js. -->
@@ -155,8 +155,9 @@
       <textarea id="avis-idee" class="saisie" rows="3" autocomplete="off"></textarea>
       <label class="question" for="avis-apercu" data-t="avis_apercu"></label>
       <textarea id="avis-apercu" rows="5" readonly></textarea>
-      <button type="button" id="avis-envoyer" class="secondaire" data-t="avis_envoyer" hidden></button>
-      <button type="button" id="avis-copier" class="secondaire" data-t="avis_copier"></button>
+      <!-- Champ piège anti-robots (cycle 6b) : invisible et hors du parcours ; coché → rien n'est envoyé. -->
+      <input type="checkbox" id="avis-piege" name="botcheck" class="piege" tabindex="-1" aria-hidden="true" autocomplete="off">
+      <button type="button" id="avis-envoyer" data-t="avis_envoyer"></button>
       <p id="avis-etat" class="discret" role="status"></p>
       <button type="button" id="avis-fermer" class="secondaire" data-t="avis_fermer"></button>
     </section>

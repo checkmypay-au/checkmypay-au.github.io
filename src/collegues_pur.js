@@ -814,15 +814,34 @@ export function verdict(syn, { refusees = [], alertes = 0 } = {}, langue) {
   return { etat: 'ok', texte: t.verdict_ok };
 }
 
+/** Version de la page, envoyée avec l'avis (cycle 6b) ; même numéro que le début de VERSION dans sw.js (testé). */
+export const VERSION_PAGE = '1.1';
+
 /**
- * Texte de l'avis à envoyer : SEULEMENT les trois réponses de la personne et des phrases fixes (aucune donnée de
- * paie, d'heures ni de fiche : la fonction ne reçoit rien d'autre). facile : 'oui' | 'non' | ''.
+ * Champs de l'avis réellement envoyés (cycle 6b) : SEULEMENT les trois réponses de la personne, la langue et la
+ * version de la page (aucune donnée de paie, d'heures ni de fiche : la fonction ne reçoit rien d'autre).
+ * facile : 'oui' | 'non' | ''.
  */
-export function texteAvis({ facile = '', gene = '', idee = '' } = {}, langue) {
+export function champsAvis({ facile = '', gene = '', idee = '' } = {}, langue) {
+  const net = (x) => String(x ?? '').trim().slice(0, 2000);
+  return {
+    facile: facile === 'oui' || facile === 'non' ? facile : '',
+    gene: net(gene),
+    idee: net(idee),
+    langue: langue === 'en' ? 'en' : 'fr',
+    version: VERSION_PAGE,
+  };
+}
+
+/** Aperçu lisible de l'avis : exactement les champs de champsAvis, rien d'autre, avec des phrases fixes. */
+export function texteAvis(reponses = {}, langue) {
   const t = TEXTES[langue];
-  const net = (x) => String(x ?? '').trim().slice(0, 2000) || t.avis_sans_reponse;
-  const f = facile === 'oui' ? t.avis_oui : facile === 'non' ? t.avis_non : t.avis_sans_reponse;
-  return [t.avis_entete, `${t.avis_q1} ${f}`, `${t.avis_q2} ${net(gene)}`, `${t.avis_q3} ${net(idee)}`].join('\n');
+  const c = champsAvis(reponses, langue);
+  const f = c.facile === 'oui' ? t.avis_oui : c.facile === 'non' ? t.avis_non : t.avis_sans_reponse;
+  return [
+    t.avis_entete, `${t.avis_q1} ${f}`, `${t.avis_q2} ${c.gene || t.avis_sans_reponse}`,
+    `${t.avis_q3} ${c.idee || t.avis_sans_reponse}`, `${t.avis_langue} ${t.avis_langue_nom}`, `${t.avis_version} ${c.version}`,
+  ].join('\n');
 }
 
 /** Clé du stockage de l'appareil pour « Garder mes fiches et mes services sur ce téléphone ». */
@@ -890,7 +909,7 @@ export function deserialiserGarde(texte) {
 export const TEXTES = {
   fr: {
     titre: 'Vérifier ma paie',
-    confiance: 'Rien ne quitte ton téléphone.',
+    confiance: 'Tes fiches et tes heures ne quittent jamais ton téléphone. Seul ton avis part, et seulement si tu appuies sur « Envoyer mon avis ». Ton résumé, c’est toi qui choisis à qui l’envoyer.',
     maj_prete: 'Une nouvelle version de l’outil est prête.',
     maj_bouton: 'Mettre à jour',
     maj_aide: 'Ce que tu as tapé sera effacé, sauf ce qui est gardé sur ce téléphone.',
@@ -1065,9 +1084,15 @@ export const TEXTES = {
     avis_q3: 'Une idée ?',
     avis_oui: 'Oui',
     avis_non: 'Non',
-    avis_note: 'N’écris ici ni montant, ni heure, ni nom : seulement ton avis sur l’outil. Rien n’est envoyé tant que tu ne touches pas « Envoyer mon avis », et c’est toi qui choisis à qui.',
+    avis_note: 'N’écris ici ni montant, ni heure, ni nom : seulement ton avis sur l’outil. Rien n’est envoyé tant que tu n’appuies pas sur « Envoyer mon avis ». Il part alors directement à la personne qui a fait l’outil.',
     avis_envoyer: 'Envoyer mon avis',
-    avis_copier: 'Copier mon avis',
+    avis_envoi: 'Envoi en cours…',
+    avis_envoye: 'Merci, ton avis est envoyé.',
+    avis_hors_ligne: 'Pas de connexion : réessaie plus tard. Ce que tu as écrit est gardé.',
+    avis_echec: 'L’envoi n’a pas marché : réessaie plus tard. Ce que tu as écrit est gardé.',
+    avis_langue: 'Langue :',
+    avis_langue_nom: 'français',
+    avis_version: 'Version de la page :',
     avis_fermer: 'Fermer',
     avis_apercu: 'Voici ce qui sera envoyé :',
     avis_entete: 'Avis sur l’outil « Vérifier ma paie »',
@@ -1075,7 +1100,7 @@ export const TEXTES = {
   },
   en: {
     titre: 'Check my pay',
-    confiance: 'Nothing leaves your phone.',
+    confiance: 'Your pay slips and hours never leave your phone. Only your feedback is sent, and only if you tap “Send my feedback”. Your summary: you choose who to send it to.',
     maj_prete: 'A new version of the tool is ready.',
     maj_bouton: 'Update',
     maj_aide: 'What you typed will be cleared, except what is kept on this phone.',
@@ -1249,9 +1274,15 @@ export const TEXTES = {
     avis_q3: 'Any idea?',
     avis_oui: 'Yes',
     avis_non: 'No',
-    avis_note: 'Do not write any amount, time or name here: only your opinion of the tool. Nothing is sent until you tap “Send my feedback”, and you choose who gets it.',
+    avis_note: 'Do not write any amount, time or name here: only your opinion of the tool. Nothing is sent until you tap “Send my feedback”. It then goes straight to the person who made the tool.',
     avis_envoyer: 'Send my feedback',
-    avis_copier: 'Copy my feedback',
+    avis_envoi: 'Sending…',
+    avis_envoye: 'Thank you, your feedback has been sent.',
+    avis_hors_ligne: 'No connection: try again later. What you wrote is kept.',
+    avis_echec: 'Sending did not work: try again later. What you wrote is kept.',
+    avis_langue: 'Language:',
+    avis_langue_nom: 'English',
+    avis_version: 'Page version:',
     avis_fermer: 'Close',
     avis_apercu: 'This is what will be sent:',
     avis_entete: 'Feedback on the “Check my pay” tool',

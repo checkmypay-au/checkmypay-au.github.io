@@ -9,11 +9,12 @@ import {
   TEXTES, MENTION, LANGUES, appliquerVraiesHeures, synthese, codeErreur, remplir, libelleNiveau,
   preparer, calculerPage, niveauxDuCalcul, cartesRefusees,
   raisonRefus, cleService, effetsPauses, phrasePause, servicesDeLaListe, dureePause, finPauseProposee, jourEtDate,
-  alertesMinuit, phraseMinuit, servicesAMain, phraseAMain, verdict, texteAvis, serialiserGarde, deserialiserGarde, CLE_GARDE,
+  alertesMinuit, phraseMinuit, servicesAMain, phraseAMain, verdict, texteAvis, champsAvis, serialiserGarde, deserialiserGarde, CLE_GARDE,
   titreSemaine, etatSemaine, phrase, lignesTotal, resumeManager, dateCourte,
   CONTRATS, CONVENTIONS, ETATS, contratDesFiches, codeQui, ficheDitCasual,
 } from '../src/collegues_pur.js';
 import { octetsFicheFictive, NOM_FICHE_FICTIVE } from './exemples/fiche_fictive.js';
+import { ADRESSE_AVIS, CLE_AVIS, SUJET_AVIS } from './avis_config.js';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL('./pdfjs/pdf.worker.mjs', import.meta.url).href;
 
@@ -1019,20 +1020,57 @@ function reprendreGarde() {
   etat.gardeMsg = 'garde_reprise';
 }
 
-// ---------- Donner mon avis (aucune donnée de paie : seulement les trois réponses) ----------
+// ---------- Donner mon avis (aucune donnée de paie : seulement les trois réponses, la langue, la version) ----------
+// Cycle 6b (décision du responsable) : envoi direct vers le service d'avis, SEULEMENT au geste « Envoyer mon avis ».
+// Sans réseau ou en cas d'échec : un message, et rien de ce qui est écrit n'est effacé.
 
-const avis = { facile: '' };
-
-function texteDeLAvis() {
-  return texteAvis({ facile: avis.facile, gene: $('avis-gene').value, idee: $('avis-idee').value }, etat.langue);
-}
+const avis = { facile: '', envoi: false };
+const reponsesAvis = () => ({ facile: avis.facile, gene: $('avis-gene').value, idee: $('avis-idee').value });
 
 function rendreAvis() {
   $('avis-oui').setAttribute('aria-pressed', String(avis.facile === 'oui'));
   $('avis-non').setAttribute('aria-pressed', String(avis.facile === 'non'));
-  $('avis-apercu').value = texteDeLAvis();
-  $('avis-envoyer').hidden = !peutPartager();
+  $('avis-apercu').value = texteAvis(reponsesAvis(), etat.langue);
+  $('avis-envoyer').disabled = avis.envoi;
   $('avis-ouvrir').setAttribute('aria-expanded', String(!$('avis').hidden));
+}
+
+/** Envoi direct (POST) : les champs de champsAvis, la clé et le sujet ; rien d'autre (le piège est vérifié ici). */
+async function envoyerAvis() {
+  if (avis.envoi) return;
+  const t = TEXTES[etat.langue];
+  // Champ piège coché : un robot, pas une personne → rien ne part (et rien n'est dit de différent).
+  if ($('avis-piege').checked) { $('avis-etat').textContent = t.avis_envoye; return; }
+  const corps = new FormData();
+  corps.append('access_key', CLE_AVIS);
+  corps.append('subject', SUJET_AVIS);
+  for (const [k, v] of Object.entries(champsAvis(reponsesAvis(), etat.langue))) corps.append(k, v);
+  avis.envoi = true;
+  $('avis-etat').textContent = t.avis_envoi;
+  rendreAvis();
+  let message;
+  const arret = new AbortController();
+  const minuterie = setTimeout(() => arret.abort(), 20000);
+  try {
+    const r = await fetch(ADRESSE_AVIS, {
+      method: 'POST', body: corps, headers: { Accept: 'application/json' },
+      cache: 'no-store', credentials: 'omit', referrerPolicy: 'no-referrer', signal: arret.signal,
+    });
+    const ok = r.ok && (await r.json().catch(() => null))?.success === true;
+    message = ok ? 'avis_envoye' : 'avis_echec';
+  } catch {
+    message = 'avis_hors_ligne'; // pas de réseau (ou trop long) : rien n'est perdu
+  } finally {
+    clearTimeout(minuterie);
+  }
+  avis.envoi = false;
+  if (message === 'avis_envoye') {
+    avis.facile = '';
+    $('avis-gene').value = '';
+    $('avis-idee').value = '';
+  }
+  rendreAvis();
+  $('avis-etat').textContent = TEXTES[etat.langue][message];
 }
 
 $('avis-ouvrir').addEventListener('click', () => {
@@ -1045,8 +1083,7 @@ for (const [id, valeur] of [['avis-oui', 'oui'], ['avis-non', 'non']]) {
   $(id).addEventListener('click', () => { avis.facile = avis.facile === valeur ? '' : valeur; rendreAvis(); });
 }
 for (const id of ['avis-gene', 'avis-idee']) $(id).addEventListener('input', rendreAvis);
-$('avis-envoyer').addEventListener('click', () => partager($('avis-apercu'), $('avis-etat')));
-$('avis-copier').addEventListener('click', () => copierTexte($('avis-apercu'), $('avis-etat')));
+$('avis-envoyer').addEventListener('click', envoyerAvis);
 $('avis-fermer').addEventListener('click', () => {
   $('avis').hidden = true;
   rendreAvis();
@@ -1172,7 +1209,18 @@ if ('serviceWorker' in navigator) {
     $('maj').hidden = false;
     $('maj-bouton').onclick = () => location.reload();
   });
-  navigator.serviceWorker.register('sw.js').then((reg) => {
+  // Cycle 6b : le service worker est à la racine du site (il tient aussi « / »). L'ancienne inscription (web/sw.js,
+  // portée /web/) n'est retirée qu'une fois celui de la racine ACTIF (relecture cycle 6b : jamais de téléphone sans
+  // aucun service worker si l'installation est coupée en route).
+  const ancienne = new URL('./', location.href).href;
+  const retirerAncienne = () => navigator.serviceWorker.getRegistrations()
+    .then((rs) => { for (const r of rs) if (r.scope === ancienne) r.unregister(); }, () => {});
+  navigator.serviceWorker.register('../sw.js', { scope: '../' }).then((reg) => {
+    if (reg.active) retirerAncienne();
+    else {
+      const sw = reg.installing ?? reg.waiting;
+      sw?.addEventListener('statechange', () => { if (sw.state === 'activated') retirerAncienne(); });
+    }
     proposer(reg.waiting);
     reg.addEventListener('updatefound', () => {
       const sw = reg.installing;
