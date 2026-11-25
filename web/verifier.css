@@ -80,8 +80,21 @@ body {
   justify-content: space-between;
   gap: 12px;
   margin-top: 12px;
+  flex-wrap: wrap;
 }
-h1 { font-size: 1.5rem; margin: 0; }
+/* v1.2.1 : le titre seul sur sa ligne, en haut, nettement le plus gros et le plus gras de la page ;
+   coupé seulement entre deux mots, jamais au milieu d'un mot (même avec une grande taille de texte). */
+h1 {
+  flex: 1 0 100%;
+  font-size: 2.25rem;
+  font-weight: 900;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--texte);
+  overflow-wrap: normal;
+  margin: 4px 0 0;
+}
+.ligne-titre .bascule { margin-left: auto; }
 h2, .h2 { font-size: 1.1rem; margin: 0 0 6px; font-weight: 700; }
 h3 { font-size: 1rem; margin: 16px 0 6px; }
 .discret { color: var(--discret); font-size: 0.9rem; margin: 4px 0 8px; }

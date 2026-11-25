@@ -815,7 +815,7 @@ export function verdict(syn, { refusees = [], alertes = 0 } = {}, langue) {
 }
 
 /** Version de la page, envoyée avec l'avis (cycle 6b) ; même numéro que le début de VERSION dans sw.js (testé). */
-export const VERSION_PAGE = '1.2';
+export const VERSION_PAGE = '1.2.1';
 
 /**
  * Champs de l'avis réellement envoyés (cycle 6b) : SEULEMENT les trois réponses de la personne, la langue et la
