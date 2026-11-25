@@ -6,7 +6,7 @@
 // Mise à jour propre : VERSION change dès qu'un fichier de la liste change (empreinte vérifiée par les tests,
 // recalculée par tests/outils/version_hors_ligne.mjs). La nouvelle version attend ; la page propose « Mettre à
 // jour » et ne recharge qu'après ce geste ; l'ancien cache est alors effacé (y compris celui de l'ancien web/sw.js).
-const VERSION = '1.1-f532545e15e8';
+const VERSION = '1.2-537b39dc55cb';
 const CACHE = `checkmypay-${VERSION}`;
 const PREFIXES = ['checkmypay-', 'controle-paie-']; // controle-paie- : caches de l'ancien web/sw.js (v1)
 
@@ -17,6 +17,7 @@ const FICHIERS = [
   'web/verifier.css',
   'web/verifier.js',
   'web/avis_config.js',
+  'web/vendor/goatcounter_count.v4.js',
   'web/manifest.webmanifest',
   'web/icone.svg',
   'web/reglages_collegues.json',

@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<!-- Aucune ressource extérieure : tout vient de la même origine (fichiers locaux). -->
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; connect-src 'self' https://api.web3forms.com; img-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<!-- Tout le code vient de la même origine (fichiers locaux). Envois permis : l'avis (au geste) et le compte des visites. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; worker-src 'self'; connect-src 'self' https://api.web3forms.com https://checkmypay-au.goatcounter.com/count; img-src 'self'; style-src 'self'; font-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>Check my pay</title>
 <link rel="stylesheet" href="verifier.css">
 <!-- Installable et utilisable hors ligne (cycle 4) : manifeste, icône, couleurs ; fichiers mis en cache par sw.js. -->
@@ -167,5 +167,8 @@
 <p class="discret pied">Fair Work Ombudsman · fairwork.gov.au · 13 13 94</p>
 <code id="violations" hidden>[]</code>
 <script type="module" src="verifier.js"></script>
+<!-- Compteur de visites (v1.2) : copie locale figée (aucun script d'un autre site) ; chemin, titre et provenance
+     fixés ici, donc rien de la page ne part ; seul le compte va à checkmypay-au.goatcounter.com. -->
+<script data-goatcounter="https://checkmypay-au.goatcounter.com/count" data-goatcounter-settings='{"path":"/","title":"Check my pay","referrer":"","no_events":true}' async src="vendor/goatcounter_count.v4.js"></script>
 </body>
 </html>

@@ -815,7 +815,7 @@ export function verdict(syn, { refusees = [], alertes = 0 } = {}, langue) {
 }
 
 /** Version de la page, envoyée avec l'avis (cycle 6b) ; même numéro que le début de VERSION dans sw.js (testé). */
-export const VERSION_PAGE = '1.1';
+export const VERSION_PAGE = '1.2';
 
 /**
  * Champs de l'avis réellement envoyés (cycle 6b) : SEULEMENT les trois réponses de la personne, la langue et la
@@ -909,7 +909,7 @@ export function deserialiserGarde(texte) {
 export const TEXTES = {
   fr: {
     titre: 'Vérifier ma paie',
-    confiance: 'Tes fiches et tes heures ne quittent jamais ton téléphone. Seul ton avis part, et seulement si tu appuies sur « Envoyer mon avis ». Ton résumé, c’est toi qui choisis à qui l’envoyer.',
+    confiance: 'Tes fiches et tes heures ne quittent jamais ton téléphone. Seuls partent un compte anonyme des visites, et ton avis si tu appuies sur « Envoyer mon avis ». Ton résumé, c’est toi qui choisis à qui l’envoyer.',
     maj_prete: 'Une nouvelle version de l’outil est prête.',
     maj_bouton: 'Mettre à jour',
     maj_aide: 'Ce que tu as tapé sera effacé, sauf ce qui est gardé sur ce téléphone.',
@@ -1100,7 +1100,7 @@ export const TEXTES = {
   },
   en: {
     titre: 'Check my pay',
-    confiance: 'Your pay slips and hours never leave your phone. Only your feedback is sent, and only if you tap “Send my feedback”. Your summary: you choose who to send it to.',
+    confiance: 'Your pay slips and hours never leave your phone. Only an anonymous visit count is sent, plus your feedback if you tap “Send my feedback”. Your summary: you choose who to send it to.',
     maj_prete: 'A new version of the tool is ready.',
     maj_bouton: 'Update',
     maj_aide: 'What you typed will be cleared, except what is kept on this phone.',
