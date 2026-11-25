@@ -84,7 +84,32 @@ function appliquerLangue() {
   $('bascule').setAttribute('aria-label', t.bascule_aide);
   $('bascule').lang = etat.langue === 'fr' ? 'en' : 'fr';
   rendreTout();
+  ajusterTitre();
 }
+
+// v1.2.1 : le titre remplit sa ligne (environ 97 %), quelle que soit la police du téléphone, sans déborder ni
+// couper un mot ; plafonné à 56 px (3,5 rem) sur grand écran. Rien d'autre ne change.
+const TITRE_MAX_PX = 56;
+function ajusterTitre() {
+  const h = document.querySelector('h1');
+  if (!h) return;
+  h.style.fontSize = '';
+  h.style.whiteSpace = 'nowrap'; // mesure sur une seule ligne
+  const plage = document.createRange();
+  plage.selectNodeContents(h);
+  const largeurTexte = () => plage.getBoundingClientRect().width;
+  const dispo = h.clientWidth;
+  const texte = largeurTexte();
+  if (dispo > 0 && texte > 0) {
+    let taille = Math.min(TITRE_MAX_PX, (parseFloat(getComputedStyle(h).fontSize) * dispo * 0.97) / texte);
+    taille = Math.floor(taille * 10) / 10;
+    h.style.fontSize = `${taille}px`;
+    for (let i = 0; i < 20 && largeurTexte() > dispo; i++) h.style.fontSize = `${(taille -= 0.5)}px`;
+  }
+  h.style.whiteSpace = '';
+}
+addEventListener('resize', ajusterTitre);
+document.fonts?.ready.then(ajusterTitre);
 
 $('bascule').addEventListener('click', () => {
   etat.langue = etat.langue === 'fr' ? 'en' : 'fr';
